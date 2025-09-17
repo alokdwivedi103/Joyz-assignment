@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dynamic Kanban Board</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Dynamic Kanban Board</h1>
+    </header>
+
+    <main class="app-main">
+      <section class="task-form-section">
+        <form novalidate id="task-form" autocomplete="off">
+          <div class="form-row">
+            <label for="task-title">Title</label>
+            <input id="task-title" name="title" type="text" placeholder="Task title" required aria-describedby="task-title-error">
+            <div class="form-error" id="task-title-error" role="alert" aria-live="polite"></div>
+          </div>
+          <div class="form-row">
+            <label for="task-description">Description</label>
+            <textarea id="task-description" name="description" placeholder="Task description" rows="2" required aria-describedby="task-description-error"></textarea>
+            <div class="form-error" id="task-description-error" role="alert" aria-live="polite"></div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" id="add-task-btn">Add Task</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="board" id="board" aria-label="Kanban Board">
+        <div class="column" data-status="todo" aria-label="To Do">
+          <div class="column-header">
+            <h2>To Do</h2>
+          </div>
+          <div class="column-body" id="column-todo" data-dropzone="true"></div>
+        </div>
+        <div class="column" data-status="inprogress" aria-label="In Progress">
+          <div class="column-header">
+            <h2>In Progress</h2>
+          </div>
+          <div class="column-body" id="column-inprogress" data-dropzone="true"></div>
+        </div>
+        <div class="column" data-status="done" aria-label="Done">
+          <div class="column-header">
+            <h2>Done</h2>
+          </div>
+          <div class="column-body" id="column-done" data-dropzone="true"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+  </html>
+
+
