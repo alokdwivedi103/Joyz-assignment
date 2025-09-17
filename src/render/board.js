@@ -1,28 +1,28 @@
-import { qs } from "../utils/dom.js";
+import { querySelector } from "../utils/dom.js";
 import { TaskStatus } from "../storage/index.js";
 import { createTaskCard } from "./taskCard.js";
 
-const COLUMN_ID_BY_STATUS = {
+const COLUMN_ID_MAP = {
   [TaskStatus.Todo]: "column-todo",
   [TaskStatus.InProgress]: "column-inprogress",
   [TaskStatus.Done]: "column-done",
 };
 
-export function clearBoard() {
-  Object.values(COLUMN_ID_BY_STATUS).forEach((id) => {
-    const col = qs(`#${id}`);
-    if (col) col.innerHTML = "";
+export function clearTaskBoard() {
+  Object.values(COLUMN_ID_MAP).forEach((columnId) => {
+    const column = querySelector(`#${columnId}`);
+    if (column) column.innerHTML = "";
   });
 }
 
-export function renderBoard(tasks) {
-  clearBoard();
+export function renderTaskBoard(tasks) {
+  clearTaskBoard();
   tasks.forEach((task) => {
-    const columnId = COLUMN_ID_BY_STATUS[task.status] || COLUMN_ID_BY_STATUS[TaskStatus.Todo];
-    const column = qs(`#${columnId}`);
+    const columnId = COLUMN_ID_MAP[task.status] || COLUMN_ID_MAP[TaskStatus.Todo];
+    const column = querySelector(`#${columnId}`);
     if (!column) return;
-    const card = createTaskCard(task);
-    column.appendChild(card);
+    const taskCard = createTaskCard(task);
+    column.appendChild(taskCard);
   });
 }
 

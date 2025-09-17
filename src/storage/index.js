@@ -10,11 +10,11 @@ export const TaskStatus = {
 
 export function loadTasks() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed;
+    const rawData = localStorage.getItem(STORAGE_KEY);
+    if (!rawData) return [];
+    const parsedTasks = JSON.parse(rawData);
+    if (!Array.isArray(parsedTasks)) return [];
+    return parsedTasks;
   } catch (error) {
     console.error("Failed to load tasks", error);
     return [];
@@ -29,28 +29,28 @@ export function saveTasks(tasks) {
   }
 }
 
-export function addTask(tasks, task) {
-  const updated = [...tasks, task];
-  saveTasks(updated);
-  return updated;
+export function addTask(tasks, newTask) {
+  const updatedTasks = [...tasks, newTask];
+  saveTasks(updatedTasks);
+  return updatedTasks;
 }
 
-export function updateTask(tasks, taskId, updates) {
-  const updated = tasks.map((t) => (t.id === taskId ? { ...t, ...updates } : t));
-  saveTasks(updated);
-  return updated;
+export function updateTask(tasks, taskId, taskUpdates) {
+  const updatedTasks = tasks.map((task) => (task.id === taskId ? { ...task, ...taskUpdates } : task));
+  saveTasks(updatedTasks);
+  return updatedTasks;
 }
 
 export function moveTask(tasks, taskId, newStatus) {
-  const updated = tasks.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t));
-  saveTasks(updated);
-  return updated;
+  const updatedTasks = tasks.map((task) => (task.id === taskId ? { ...task, status: newStatus } : task));
+  saveTasks(updatedTasks);
+  return updatedTasks;
 }
 
 export function removeTask(tasks, taskId) {
-  const updated = tasks.filter((t) => t.id !== taskId);
-  saveTasks(updated);
-  return updated;
+  const updatedTasks = tasks.filter((task) => task.id !== taskId);
+  saveTasks(updatedTasks);
+  return updatedTasks;
 }
 
 

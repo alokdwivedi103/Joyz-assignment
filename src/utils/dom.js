@@ -1,31 +1,31 @@
 // DOM helper utilities for querying, creation, and event handling
 
-export const qs = (selector, scope = document) => scope.querySelector(selector);
-export const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+export const querySelector = (selector, scope = document) => scope.querySelector(selector);
+export const querySelectorAll = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
-export const createEl = (tag, options = {}) => {
-  const el = document.createElement(tag);
-  if (options.className) el.className = options.className;
-  if (options.text) el.textContent = options.text;
+export const createElement = (tagName, options = {}) => {
+  const element = document.createElement(tagName);
+  if (options.className) element.className = options.className;
+  if (options.text) element.textContent = options.text;
   if (options.attrs) {
-    Object.entries(options.attrs).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) el.setAttribute(key, String(value));
+    Object.entries(options.attrs).forEach(([attributeName, attributeValue]) => {
+      if (attributeValue !== undefined && attributeValue !== null) element.setAttribute(attributeName, String(attributeValue));
     });
   }
-  return el;
+  return element;
 };
 
-export const on = (el, event, handler, options) => {
-  el.addEventListener(event, handler, options);
-  return () => el.removeEventListener(event, handler, options);
+export const addEventListener = (element, eventType, eventHandler, options) => {
+  element.addEventListener(eventType, eventHandler, options);
+  return () => element.removeEventListener(eventType, eventHandler, options);
 };
 
-export const delegate = (root, eventName, selector, handler) => {
-  return on(root, eventName, (event) => {
-    const potentialTargets = qsa(selector, root);
-    const target = event.target.closest(selector);
-    if (target && potentialTargets.includes(target)) {
-      handler(event, target);
+export const delegateEvent = (rootElement, eventType, selector, eventHandler) => {
+  return addEventListener(rootElement, eventType, (event) => {
+    const potentialTargets = querySelectorAll(selector, rootElement);
+    const targetElement = event.target.closest(selector);
+    if (targetElement && potentialTargets.includes(targetElement)) {
+      eventHandler(event, targetElement);
     }
   });
 };
